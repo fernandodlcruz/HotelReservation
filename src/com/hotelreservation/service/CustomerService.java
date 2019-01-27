@@ -3,10 +3,12 @@ package com.hotelreservation.service;
 import java.util.HashMap;
 import java.util.Map;
 import com.hotelreservation.model.Customer;
+import com.hotelreservation.repository.CustomerDAO;
 
 public class CustomerService {
 	private static Map<Integer, Customer> customers = new HashMap<>();
 	private static int id = 1;
+	private static CustomerDAO dao = new CustomerDAO();
 
 	static {
 		 initializeCustomer();
@@ -35,7 +37,7 @@ public class CustomerService {
 	}
 
 	public static Customer getCustomer(int id) {
-		Customer cust = customers.get(id);
+		Customer cust = dao.GetById(id); // customers.get(id);
 		return cust;
 	}
 
