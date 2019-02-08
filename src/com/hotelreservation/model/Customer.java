@@ -3,11 +3,12 @@ package com.hotelreservation.model;
 import javax.xml.bind.annotation.XmlRootElement;
 
 @XmlRootElement
-// testing testing
 public class Customer {
 	private int id;
 	 private String firstName;
 	 private String lastName;
+	 private String email;
+	 private String telephone;
 
 	 public int getId() {
 	  return id;
@@ -31,5 +32,19 @@ public class Customer {
 
 	 public void setLastName(String lastName) {
 	  this.lastName = lastName;
+	 }
+	 public void setEmail(String em) {
+		  this.email = em;
+		 }
+	 public String getEmail() {
+		  return email;
+		 }
+	 public void setTelephone(String tel)
+	 {
+		 this.telephone=tel;
+	 }
+	 public String getTelephone()
+	 {
+		 return telephone;
 	 }
 }
