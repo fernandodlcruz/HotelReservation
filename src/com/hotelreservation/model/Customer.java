@@ -3,6 +3,7 @@ package com.hotelreservation.model;
 import javax.xml.bind.annotation.XmlRootElement;
 
 @XmlRootElement
+// testing testing
 public class Customer {
 	private int id;
 	 private String firstName;
