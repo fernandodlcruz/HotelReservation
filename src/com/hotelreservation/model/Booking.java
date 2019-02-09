@@ -4,7 +4,7 @@ import  java.util.*;
 public class Booking {
 	private Room room;
 	private Customer customer;
-	private int vendor;
+	private int vendorID;
 	private Date startDate;
 	private Date endDate;
 	
@@ -12,7 +12,7 @@ public class Booking {
 		
 		this.room = room;
 		this.customer = customer;
-		this.vendor = vendor;
+		this.vendorID = vendor;
 		this.startDate = startDate;
 		this.endDate = endDate;
 	}
@@ -34,11 +34,11 @@ public class Booking {
 	}
 
 	public int getVendor() {
-		return vendor;
+		return vendorID;
 	}
 
 	public void setVendor(int vendor) {
-		this.vendor = vendor;
+		this.vendorID = vendor;
 	}
 
 	public Date getStartDate() {

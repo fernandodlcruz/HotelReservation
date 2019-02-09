@@ -4,32 +4,41 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 @XmlRootElement
 public class Customer {
-	private int id;
+	 private int id;
 	 private String firstName;
 	 private String lastName;
 	 private String email;
 	 private String telephone;
-
-	 public int getId() {
+	 private int vendorID;
+	
+	 public String getVendorID() {
+		return vendorID;
+	}
+	
+	public void setVendorID(String vendorID) {
+		this.vendorID = vendorID;
+	}
+	
+	public int getId() {
 	  return id;
 	 }
-
+	
 	 public void setId(int id) {
 	  this.id = id;
 	 }
-
+	
 	 public String getFirstName() {
 	  return firstName;
 	 }
-
+	
 	 public void setFirstName(String firstName) {
 	  this.firstName = firstName;
 	 }
-
+	
 	 public String getLastName() {
 	  return lastName;
 	 }
-
+	
 	 public void setLastName(String lastName) {
 	  this.lastName = lastName;
 	 }
