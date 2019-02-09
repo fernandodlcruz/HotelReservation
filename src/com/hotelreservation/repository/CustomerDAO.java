@@ -22,15 +22,15 @@ public class CustomerDAO implements IRepository<Customer> {
 	}
 
 	@Override
-	public boolean Delete(int id) {
+	public boolean Delete(Customer entity) {
 		// TODO Auto-generated method stub
 		return false;
 	}
 
 	@Override
-	public Customer GetById(int id) {
+	public Customer GetById(Customer entity) {
 		Connection connection = ConnectionFactory.getConnection();
-		String query = "SELECT * FROM Customer WHERE id= " + id;
+		String query = "SELECT * FROM Customer WHERE id= " + entity.getId();
 		
         try {
             Statement stmt = connection.createStatement();

@@ -11,11 +11,11 @@ public class Customer {
 	 private String telephone;
 	 private int vendorID;
 	
-	 public String getVendorID() {
+	 public int getVendorID() {
 		return vendorID;
 	}
 	
-	public void setVendorID(String vendorID) {
+	public void setVendorID(int vendorID) {
 		this.vendorID = vendorID;
 	}
 	

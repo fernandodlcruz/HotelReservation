@@ -60,13 +60,13 @@ public class BookingDAO implements IRepository<Booking>{
 	}
 
 	@Override
-	public boolean Delete(int id) {
+	public boolean Delete(Booking entity) {
 		// TODO Auto-generated method stub
 		return false;
 	}
 
 	@Override
-	public Booking GetById(int id) {
+	public Booking GetById(Booking entity) {
 		// TODO Auto-generated method stub
 		return null;
 	}

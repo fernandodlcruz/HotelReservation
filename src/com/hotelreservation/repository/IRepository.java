@@ -5,7 +5,7 @@ import java.util.List;
 public interface IRepository<E> {
 	boolean Insert(E entity);	 
     boolean Update(E entity);
-    boolean Delete(int id);
-    E GetById(int id);
+    boolean Delete(E entity);
+    E GetById(E entity);
     List<E> GetAll();
 }
