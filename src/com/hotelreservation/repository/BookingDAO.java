@@ -18,10 +18,10 @@ public class BookingDAO implements IRepository<Booking>{
 		Room room = entity.getRoom();
 		
 		Connection connection = ConnectionFactory.getConnection();
+		// TODO: Could break, specify columns
 		String query = "INSERT INTO ROOM_BOOKING VALUES (" + 
 				room.getRoomNumber() + ", " +
 				customer.getId() + ", " +
-				customer.getVendorID() + ", " +
 				entity.getStartDate() + ", " +
 				entity.getEndDate() + ")";
 		
@@ -46,8 +46,7 @@ public class BookingDAO implements IRepository<Booking>{
 				"StartDate = " + entity.getStartDate() + ", " + //TODO: find out if I need something around the date value
 				"EndDate = " + entity.getEndDate() +
 				" WHERE RoomNumber = " + room.getRoomNumber() + 
-					" AND CustomerID = " + customer.getId() +
-					" AND VendorID = " + customer.getVendorID();
+					" AND CustomerID = " + customer.getId();
 		
         try {
             Statement stmt = connection.createStatement();
@@ -61,6 +60,11 @@ public class BookingDAO implements IRepository<Booking>{
 	}
 
 	@Override
+	public boolean Delete(int id) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+	
 	public boolean Delete(Booking entity) {
 		Customer customer = entity.getCustomer();
 		Room room = entity.getRoom();
@@ -68,8 +72,7 @@ public class BookingDAO implements IRepository<Booking>{
 		Connection connection = ConnectionFactory.getConnection();
 		String query = "DELETE FROM ROOM_BOOKING " +
 				"WHERE RoomNumber = " + room.getRoomNumber() + 
-					" AND CustomerID = " + customer.getId() +
-					" AND VendorID = " + customer.getVendorID();
+					" AND CustomerID = " + customer.getId();
 		
         try {
             Statement stmt = connection.createStatement();
@@ -83,6 +86,11 @@ public class BookingDAO implements IRepository<Booking>{
 	}
 
 	@Override
+	public Booking GetById(int id) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	
 	public Booking GetById(Booking entity) {
 		Customer customer = entity.getCustomer();
 		Room room = entity.getRoom();
@@ -90,8 +98,7 @@ public class BookingDAO implements IRepository<Booking>{
 		Connection connection = ConnectionFactory.getConnection();
 		String query = "SELECT * FROM ROOM_BOOKING " +
 				"WHERE RoomNumber = " + room.getRoomNumber() + 
-					" AND CustomerID = " + customer.getId() +
-					" AND VendorID = " + customer.getVendorID();
+					" AND CustomerID = " + customer.getId();
 		
         try {
             Statement stmt = connection.createStatement();
@@ -103,9 +110,10 @@ public class BookingDAO implements IRepository<Booking>{
             }
             
         } catch (SQLException ex) {
-            ex.printStackTrace();
-            return null;
+            ex.printStackTrace();            
         }
+        
+        return null;
 	}
 
 	@Override
@@ -113,5 +121,4 @@ public class BookingDAO implements IRepository<Booking>{
 		// TODO Auto-generated method stub
 		return null;
 	}
-
 }

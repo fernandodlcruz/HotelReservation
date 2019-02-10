@@ -3,7 +3,6 @@ package com.hotelreservation.repository;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.hotelreservation.model.Customer;
 import com.hotelreservation.model.Room;
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -19,8 +18,11 @@ public class RoomDAO implements IRepository<Room> {
 
 	@Override
 	public boolean Insert(Room entity) {
-		String query = "INSERT INTO Room(RoomNumber, Capacity, Price, Description)" + 
-						"VALUES()";
+		String query = "INSERT INTO Room(RoomNumber, Capacity, Price, Description) " + 
+						"VALUES(" + entity.getRoomNumber() + 
+						", " + entity.getRoomCapacity() +
+						", " + entity.getPrice() +
+						", '" + entity.getDescription() + "')";
 		
         try {
             Statement stmt = conn.createStatement();
@@ -36,21 +38,46 @@ public class RoomDAO implements IRepository<Room> {
 
 	@Override
 	public boolean Update(Room entity) {
-		// TODO Auto-generated method stub
+		String query = "UPDATE Room SET " +
+				", Capacity = " + entity.getRoomCapacity() +
+				", Price = " + entity.getPrice() +
+				", Description = '" + entity.getDescription() + "'" +
+				" WHERE RoomNumber = " + entity.getRoomNumber();
+
+		try {
+		    Statement stmt = conn.createStatement();
+		    stmt.executeUpdate(query);
+		    
+		    return true;
+		} catch (SQLException ex) {
+		    ex.printStackTrace();
+		}
+
 		return false;
 	}
 
 	@Override
-	public boolean Delete(Room entity) {
-		// TODO Auto-generated method stub
+	public boolean Delete(int id) {
+		String query = "DELETE FROM Room " +
+				"WHERE RoomNumber = " + id;
+
+		try {
+		    Statement stmt = conn.createStatement();
+		    stmt.executeUpdate(query);
+		    
+		    return true;
+		} catch (SQLException ex) {
+		    ex.printStackTrace();
+		}
+
 		return false;
 	}
 
 	@Override
-	public Room GetById(Room entity) {		
+	public Room GetById(int id) {
 		Room room = null; 
-				
-		String query = "SELECT * FROM Room WHERE RoomNumber = " + entity.getRoomNumber();
+
+		String query = "SELECT * FROM Room WHERE RoomNumber = " + id;
 		
         try {
             Statement stmt = conn.createStatement();
