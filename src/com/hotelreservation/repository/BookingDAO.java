@@ -6,6 +6,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.List;
 
 import com.hotelreservation.model.Booking;
@@ -136,8 +137,39 @@ public class BookingDAO implements IRepository<Booking>{
         return null;
 	}
 	
+	//Return all Rooms in ROOM_BOOKING with the given RoomNumber.
 	public List<Booking> GetByRoomNum(int roomNum){
-		//TODO: Finsh this method
+		List<Booking> bookings = new ArrayList<Booking>();
+		
+		Connection connection = ConnectionFactory.getConnection();
+		String query = "SELECT * FROM ROOM_BOOKING " +
+				"WHERE RoomNumber = " + roomNum;
+		
+		try {
+			Statement stmt = connection.createStatement();
+            ResultSet rs = stmt.executeQuery(query);
+            
+            RoomDAO rmDAO = new RoomDAO();
+            CustomerDAO cuDAO = new CustomerDAO();
+            
+            while(rs.next()) {
+            	Room room = rmDAO.GetById(rs.getInt("RoomID"));
+            	Customer customer = cuDAO.GetById(rs.getInt("CustomerID"));
+            	
+            	bookings.add(new Booking(rs.getInt("BookingID"),
+            			room,
+            			customer,
+            			rs.getDate("StartDate"),
+            			rs.getDate("EndDate")));
+            }
+
+        	return bookings;
+			
+		} catch (SQLException ex) {
+            ex.printStackTrace();            
+        }
+		
+		return null;
 	}
 
 	@Override
