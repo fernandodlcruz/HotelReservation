@@ -2,13 +2,15 @@ package com.hotelreservation.model;
 import  java.util.*;
 
 public class Booking {
+	private int bookingID;
 	private Room room;
 	private Customer customer;
 	private Date startDate;
 	private Date endDate;
 	
-	public Booking(Room room, Customer customer, int vendor, Date startDate, Date endDate) {
+	public Booking(int bookingID, Room room, Customer customer, Date startDate, Date endDate) {
 		
+		this.bookingID = bookingID;
 		this.room = room;
 		this.customer = customer;
 		this.startDate = startDate;
