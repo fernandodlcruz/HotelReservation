@@ -80,7 +80,7 @@ public class RoomDAO implements IRepository<Room> {
 	public Room GetById(int id) {
 		Room room = null; 
 
-		String query = "SELECT * FROM Room WHERE RoomNumber = " + id;
+		String query = "SELECT * FROM ROOM WHERE RoomNumber = " + id;
 		
         try {
             Statement stmt = conn.createStatement();
@@ -100,7 +100,7 @@ public class RoomDAO implements IRepository<Room> {
 	public List<Room> GetAll() {
 		List<Room> listRoom = new ArrayList<Room>(); 
 		
-		String query = "SELECT * FROM Room";
+		String query = "SELECT * FROM ROOM";
 		
         try {
             Statement stmt = conn.createStatement();
@@ -119,7 +119,7 @@ public class RoomDAO implements IRepository<Room> {
 	public List<Room> GetAllByFilter(Filter filter) {
 		List<Room> listRoom = new ArrayList<Room>(); 
 		
-		String query = "SELECT * FROM Room WHERE Capacity = " + filter.getRoomCapacity();
+		String query = "SELECT * FROM ROOM WHERE Capacity = " + filter.getRoomCapacity();
 		
         try {
             Statement stmt = conn.createStatement();
