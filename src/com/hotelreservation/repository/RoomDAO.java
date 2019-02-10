@@ -78,20 +78,35 @@ public class RoomDAO implements IRepository<Room> {
 */
 	@Override
 	public Room GetById(int id) {
+		Statement stmt = null;
 		Room room = null; 
 
 		String query = "SELECT * FROM ROOM WHERE RoomNumber = " + id;
 		
         try {
-            Statement stmt = conn.createStatement();
+            stmt = conn.createStatement();
             ResultSet rs = stmt.executeQuery(query);
             if(rs.next())
             {
                 room = new Room(rs.getInt("RoomNumber"), rs.getInt("RoomCapacity"), rs.getDouble("Price"), rs.getString("Description"));
             }
+            
+            rs.close();
         } catch (SQLException ex) {
             ex.printStackTrace();
-        }
+        } finally {
+            try {
+                if(stmt!=null)
+                   stmt.close();
+             } catch(SQLException se2) {
+             }// nothing we can do
+             try{
+                if(conn!=null)
+                   conn.close();
+             } catch(SQLException se) {
+                se.printStackTrace();
+             }
+         }
         
 		return room;
 	}
@@ -132,20 +147,40 @@ public class RoomDAO implements IRepository<Room> {
 	}
 
 	public List<Room> GetAllByFilter(Filter filter) {
-		List<Room> listRoom = new ArrayList<Room>(); 
+		Statement stmt = null;
+		List<Room> listRoom = new ArrayList<Room>();
+		BookingDAO bookDao = new BookingDAO();
 		
 		String query = "SELECT * FROM ROOM WHERE Capacity = " + filter.getRoomCapacity();
 		
         try {
-            Statement stmt = conn.createStatement();
+            stmt = conn.createStatement();
             ResultSet rs = stmt.executeQuery(query);
+            Room room;
             while(rs.next())
             {
-                listRoom.add(new Room(rs.getInt("RoomNumber"), rs.getInt("Capacity"), rs.getDouble("Price"), rs.getString("Description")));
+            	room = new Room(rs.getInt("RoomNumber"), rs.getInt("Capacity"), rs.getDouble("Price"), rs.getString("Description"));
+            	room.setListBooking(bookDao.GetByRoomNum(room.getRoomNumber()));
+            	
+                listRoom.add(room);
             }
+            
+            rs.close();
         } catch (SQLException ex) {
             ex.printStackTrace();
-        }
+        } finally {
+            try {
+                if(stmt!=null)
+                   stmt.close();
+             } catch(SQLException se2) {
+             }// nothing we can do
+             try{
+                if(conn!=null)
+                   conn.close();
+             } catch(SQLException se) {
+                se.printStackTrace();
+             }
+         }
         
 		return listRoom;
 	}

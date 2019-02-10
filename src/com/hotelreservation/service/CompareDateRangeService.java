@@ -1,9 +1,9 @@
 package com.hotelreservation.service;
 
 import java.util.Date;
-import java.text.ParseException;
+/*import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.*;
+import java.util.*;*/
 
 public class CompareDateRangeService {
 	public static String strSd1;
@@ -33,7 +33,7 @@ public class CompareDateRangeService {
 			System.out.println("No date intersection detected, room available");
 			return false;
 	}
-	public static void main(String[] args) 
+	/*public static void main(String[] args) 
 	{
 		Scanner getDates = new Scanner(System.in);
 		System.out.println("Dates should have the format dd/mm/yy");
@@ -68,6 +68,6 @@ public class CompareDateRangeService {
 		checkForDateClash(startD1, endD1, startD2, endD2);
 		
 	
-	}
+	}*/
 
 }

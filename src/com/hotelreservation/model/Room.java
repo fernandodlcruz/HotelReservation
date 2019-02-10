@@ -52,7 +52,7 @@ public class Room {
 		this.description = dscrptn;
 	}
 	
-	public List<Booking> getBooking() {
+	public List<Booking> getListBooking() {
 		return listBookings;
 	}
 	

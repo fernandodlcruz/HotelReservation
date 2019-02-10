@@ -138,6 +138,7 @@ public class BookingDAO implements IRepository<Booking>{
 	
 	public List<Booking> GetByRoomNum(int roomNum){
 		//TODO: Finsh this method
+		return null;
 	}
 
 	@Override
