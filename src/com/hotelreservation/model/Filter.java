@@ -6,14 +6,16 @@ public class Filter {
 	protected int roomNumber;	
 	protected Date checkInDate;
 	protected Date checkOutDate;
+	protected int roomCapacity;
 	
 	public Filter() {		
 	}
 	
-	public Filter(int roomNumber, Date checkInDate, Date checkOutDate) {
+	public Filter(int roomNumber, Date checkInDate, Date checkOutDate, int capacity) {
 		this.roomNumber = roomNumber;
 		this.checkInDate = checkInDate;
 		this.checkOutDate = checkOutDate;
+		roomCapacity = capacity;
 	}
 	
 	public int getRoomNumber() {
@@ -33,5 +35,11 @@ public class Filter {
 	}
 	public void setCheckOutDate(Date checkOutDate) {
 		this.checkOutDate = checkOutDate;
+	}
+	public int getRoomCapacity() {
+		return roomCapacity;
+	}
+	public void setRoomCapacity(int value) {
+		this.roomCapacity = value;
 	}
 }

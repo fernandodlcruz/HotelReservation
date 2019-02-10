@@ -3,6 +3,7 @@ package com.hotelreservation.repository;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.hotelreservation.model.Filter;
 import com.hotelreservation.model.Room;
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -12,7 +13,7 @@ import java.sql.Statement;
 public class RoomDAO implements IRepository<Room> {
 	private Connection conn;
 	
-	RoomDAO() {
+	public RoomDAO() {
 		conn = ConnectionFactory.getConnection();
 	}
 
@@ -115,7 +116,25 @@ public class RoomDAO implements IRepository<Room> {
 		return listRoom;
 	}
 
-
+	public List<Room> GetAllByFilter(Filter filter) {
+		List<Room> listRoom = new ArrayList<Room>(); 
+		
+		String query = "SELECT * FROM Room WHERE Capacity = " + filter.getRoomCapacity();
+		
+        try {
+            Statement stmt = conn.createStatement();
+            ResultSet rs = stmt.executeQuery(query);
+            while(rs.next())
+            {
+                listRoom.add(new Room(rs.getInt("RoomNumber"), rs.getInt("RoomCapacity"), rs.getDouble("Price"), rs.getString("Description")));
+            }
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+        
+		return listRoom;
+	}
+	
 	@Override
 	public boolean Insert(Room entity) {
 		// TODO Auto-generated method stub

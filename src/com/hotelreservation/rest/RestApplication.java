@@ -3,7 +3,7 @@ package com.hotelreservation.rest;
 import java.util.HashSet;
 import java.util.Set;
 import javax.ws.rs.core.Application;
-import com.hotelreservation.resource.CustomerResource;
+import com.hotelreservation.resource.*;
 
 public class RestApplication extends Application {
 
@@ -11,6 +11,7 @@ public class RestApplication extends Application {
 	public Set<Class<?>> getClasses() {
 		Set<Class<?>> s = new HashSet<Class<?>>();
 		s.add(CustomerResource.class);
+		s.add(SearchRoomResource.class);
 		return s;
 	}
 }

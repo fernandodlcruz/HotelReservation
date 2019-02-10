@@ -1,16 +1,23 @@
 package com.hotelreservation.model;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Room {
 	private int roomNumber;
 	private int roomCapacity;
 	private double price;
 	private String description;
+	private List<Booking> listBookings;
+	
+	public Room() {}
 	
 	public Room(int roomNumber, int roomCapacity, double price, String description) {
 		this.roomNumber = roomNumber;
 		this.roomCapacity = roomCapacity;
 		this.price = price;
 		this.description = description;
+		listBookings = new ArrayList<Booking>();
 	}
 
 	public int getRoomNumber() {
@@ -42,6 +49,12 @@ public class Room {
 		this.description = dscrptn;
 	}
 	
+	public List<Booking> getBooking() {
+		return listBookings;
+	}
 	
+	public void setListBooking(List<Booking> value) {
+		listBookings = value;
+	}
 }
 
