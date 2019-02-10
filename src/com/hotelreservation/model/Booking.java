@@ -1,6 +1,9 @@
 package com.hotelreservation.model;
 import  java.util.*;
 
+import javax.xml.bind.annotation.XmlRootElement;
+
+@XmlRootElement
 public class Booking {
 	private int bookingID;
 	private Room room;

@@ -3,6 +3,9 @@ package com.hotelreservation.model;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.xml.bind.annotation.XmlRootElement;
+
+@XmlRootElement
 public class Room {
 	private int roomNumber;
 	private int roomCapacity;

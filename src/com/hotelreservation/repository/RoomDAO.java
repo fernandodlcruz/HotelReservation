@@ -98,21 +98,36 @@ public class RoomDAO implements IRepository<Room> {
 
 	@Override
 	public List<Room> GetAll() {
+		Statement stmt = null;
 		List<Room> listRoom = new ArrayList<Room>(); 
 		
 		String query = "SELECT * FROM ROOM";
 		
         try {
-            Statement stmt = conn.createStatement();
+            stmt = conn.createStatement();
             ResultSet rs = stmt.executeQuery(query);
             while(rs.next())
             {
-                listRoom.add(new Room(rs.getInt("RoomNumber"), rs.getInt("RoomCapacity"), rs.getDouble("Price"), rs.getString("Description")));
+                listRoom.add(new Room(rs.getInt("RoomNumber"), rs.getInt("Capacity"), rs.getDouble("Price"), rs.getString("Description")));
             }
+            
+            rs.close();
         } catch (SQLException ex) {
             ex.printStackTrace();
+        } finally {
+            try {
+               if(stmt!=null)
+                  stmt.close();
+            } catch(SQLException se2) {
+            }// nothing we can do
+            try{
+               if(conn!=null)
+                  conn.close();
+            } catch(SQLException se) {
+               se.printStackTrace();
+            }
         }
-        
+
 		return listRoom;
 	}
 
@@ -126,7 +141,7 @@ public class RoomDAO implements IRepository<Room> {
             ResultSet rs = stmt.executeQuery(query);
             while(rs.next())
             {
-                listRoom.add(new Room(rs.getInt("RoomNumber"), rs.getInt("RoomCapacity"), rs.getDouble("Price"), rs.getString("Description")));
+                listRoom.add(new Room(rs.getInt("RoomNumber"), rs.getInt("Capacity"), rs.getDouble("Price"), rs.getString("Description")));
             }
         } catch (SQLException ex) {
             ex.printStackTrace();
