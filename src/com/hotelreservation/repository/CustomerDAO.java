@@ -41,7 +41,7 @@ public class CustomerDAO implements IRepository<Customer> {
 	@Override
 	public boolean Delete(int id) {
 		Connection connection = ConnectionFactory.getConnection();
-		String query = "DELETE FROM Customer WHERE id= " + id;
+		String query = "DELETE FROM CUSTOMER WHERE CustomerID = " + id;
 		
         try {
             Statement stmt = connection.createStatement();
@@ -57,16 +57,19 @@ public class CustomerDAO implements IRepository<Customer> {
 	@Override
 	public Customer GetById(int id) {
 		Connection connection = ConnectionFactory.getConnection();
-		String query = "SELECT * FROM Customer WHERE id= " + id;
+		String query = "SELECT * FROM CUSTOMER WHERE CustomerID = " + id;
 		
         try {
             Statement stmt = connection.createStatement();
             ResultSet rs = stmt.executeQuery(query);
             if(rs.next())
             {
-                Customer customer = new Customer();
-                customer.setId(rs.getInt("id"));
-                customer.setFirstName(rs.getString("name"));
+                Customer customer = new Customer(rs.getInt("CustomerID"),
+                		rs.getString("FirstName"),
+                		rs.getString("LastName"),
+                		rs.getString("Email"),
+                		rs.getString("Phone"),
+                		rs.getInt("VendorID"));
                 return customer;
             }
         } catch (SQLException ex) {
