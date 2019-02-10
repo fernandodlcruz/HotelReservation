@@ -16,6 +16,8 @@ public class RoomDAO implements IRepository<Room> {
 		conn = ConnectionFactory.getConnection();
 	}
 
+//  The back-end should only be able to read from the ROOM table, not modify it.
+/*	
 	@Override
 	public boolean Insert(Room entity) {
 		String query = "INSERT INTO Room(RoomNumber, Capacity, Price, Description) " + 
@@ -72,7 +74,7 @@ public class RoomDAO implements IRepository<Room> {
 
 		return false;
 	}
-
+*/
 	@Override
 	public Room GetById(int id) {
 		Room room = null; 
@@ -111,6 +113,27 @@ public class RoomDAO implements IRepository<Room> {
         }
         
 		return listRoom;
+	}
+
+
+	@Override
+	public boolean Insert(Room entity) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+
+	@Override
+	public boolean Update(Room entity) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+
+	@Override
+	public boolean Delete(int id) {
+		// TODO Auto-generated method stub
+		return false;
 	}
 
 }

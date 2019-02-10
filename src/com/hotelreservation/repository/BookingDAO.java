@@ -11,7 +11,7 @@ import com.hotelreservation.model.Customer;
 import com.hotelreservation.model.Room;
 
 public class BookingDAO implements IRepository<Booking>{
-
+	//TODO: the ROOM_BOOKING table schema changed, update queries to reflect this. 
 	@Override
 	public boolean Insert(Booking entity) {
 		Customer customer = entity.getCustomer();

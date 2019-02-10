@@ -5,9 +5,6 @@ public class Room {
 	private int roomCapacity;
 	private double price;
 	private String description;
-
-	public Room() {		
-	}
 	
 	public Room(int roomNumber, int roomCapacity, double price, String description) {
 		this.roomNumber = roomNumber;

@@ -8,7 +8,7 @@ public class Customer {
 	 private String firstName;
 	 private String lastName;
 	 private String email;
-	 private String telephone;
+	 private String phone;
 	 private int vendorID;
 	
 	 public int getVendorID() {
@@ -48,12 +48,12 @@ public class Customer {
 	 public String getEmail() {
 		  return email;
 		 }
-	 public void setTelephone(String tel)
+	 public void setPhone(String tel)
 	 {
-		 this.telephone=tel;
+		 this.phone=tel;
 	 }
-	 public String getTelephone()
+	 public String getPhone()
 	 {
-		 return telephone;
+		 return phone;
 	 }
 }

@@ -11,8 +11,25 @@ public class CustomerDAO implements IRepository<Customer> {
 
 	@Override
 	public boolean Insert(Customer entity) {
-		// TODO Auto-generated method stub
-		return false;
+		Connection connection = ConnectionFactory.getConnection();
+		String query = "INSERT INTO CUSTOMER (FirstName, LastName, Email, Phone, VendorID) "
+				+ "VALUES ("
+				+ entity.getFirstName() + ", " 
+				+ entity.getLastName() + ", " 
+				+ entity.getEmail() + ", " 
+				+ entity.getPhone() + ", "
+				+ entity.getVendorID() + ")";
+		
+        try {
+            Statement stmt = connection.createStatement();
+            stmt.executeQuery(query);
+            return true;
+            
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+        
+        return false;
 	}
 
 	@Override
@@ -23,8 +40,18 @@ public class CustomerDAO implements IRepository<Customer> {
 
 	@Override
 	public boolean Delete(int id) {
-		// TODO Auto-generated method stub
-		return false;
+		Connection connection = ConnectionFactory.getConnection();
+		String query = "DELETE FROM Customer WHERE id= " + id;
+		
+        try {
+            Statement stmt = connection.createStatement();
+            stmt.executeQuery(query);
+            return true;
+            
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+        return false;
 	}
 
 	@Override
