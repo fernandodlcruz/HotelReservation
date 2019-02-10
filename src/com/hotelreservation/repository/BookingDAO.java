@@ -5,6 +5,7 @@ import java.sql.Date;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.text.SimpleDateFormat;
 import java.util.List;
 
 import com.hotelreservation.model.Booking;
@@ -88,18 +89,9 @@ public class BookingDAO implements IRepository<Booking>{
 	
 	@Override
 	public boolean Delete(int id) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-	
-	public boolean Delete(Booking entity) {
-		Customer customer = entity.getCustomer();
-		Room room = entity.getRoom();
-		
 		Connection connection = ConnectionFactory.getConnection();
 		String query = "DELETE FROM ROOM_BOOKING " +
-				"WHERE RoomNumber = " + room.getRoomNumber() + 
-					" AND CustomerID = " + customer.getId();
+				"WHERE BookingID = " + id;
 		
         try {
             Statement stmt = connection.createStatement();
@@ -114,26 +106,27 @@ public class BookingDAO implements IRepository<Booking>{
 
 	@Override
 	public Booking GetById(int id) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-	
-	public Booking GetById(Booking entity) {
-		Customer customer = entity.getCustomer();
-		Room room = entity.getRoom();
-		
 		Connection connection = ConnectionFactory.getConnection();
 		String query = "SELECT * FROM ROOM_BOOKING " +
-				"WHERE RoomNumber = " + room.getRoomNumber() + 
-					" AND CustomerID = " + customer.getId();
+				"WHERE BookingID = " + id;
 		
         try {
             Statement stmt = connection.createStatement();
             ResultSet rs = stmt.executeQuery(query);
+            
+            RoomDAO rmDAO = new RoomDAO();
+            CustomerDAO cuDAO = new CustomerDAO();
+            
             if(rs.next())
             {
-            	//TODO: Implement the RoomDAO and CustomerDAO classes as they will be needed here. 
-            	//return new Booking()
+            	Room room = rmDAO.GetById(rs.getInt("RoomID"));
+            	Customer customer = cuDAO.GetById(rs.getInt("CustomerID"));
+            	
+            	return new Booking(rs.getInt("BookingID"),
+            			room,
+            			customer,
+            			rs.getDate("StartDate"),
+            			rs.getDate("EndDate")); 
             }
             
         } catch (SQLException ex) {
@@ -141,6 +134,10 @@ public class BookingDAO implements IRepository<Booking>{
         }
         
         return null;
+	}
+	
+	public List<Booking> GetByRoomNum(int roomNum){
+		//TODO: Finsh this method
 	}
 
 	@Override
