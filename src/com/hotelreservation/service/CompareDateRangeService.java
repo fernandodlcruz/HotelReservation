@@ -5,7 +5,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
-public class CompareDateRangeMethod {
+public class CompareDateRangeService {
 	public static String strSd1;
 	public static String strEd1;
 	public static String strSd2;
