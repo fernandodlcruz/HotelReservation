@@ -1,6 +1,7 @@
 package com.hotelreservation.repository;
 
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -18,8 +19,7 @@ public class BookingDAO implements IRepository<Booking>{
 		Room room = entity.getRoom();
 		
 		Connection connection = ConnectionFactory.getConnection();
-		// TODO: Could break, specify columns
-		String query = "INSERT INTO ROOM_BOOKING VALUES (" + 
+		String query = "INSERT INTO ROOM_BOOKING (RoomNumber, CustomerID, StartDate, EndDate) VALUES (" + 
 				room.getRoomNumber() + ", " +
 				customer.getId() + ", " +
 				entity.getStartDate() + ", " +
@@ -32,21 +32,47 @@ public class BookingDAO implements IRepository<Booking>{
             
         } catch (SQLException ex) {
             ex.printStackTrace();
-            return false;
         }
+        return false;
 	}
 
 	@Override
 	public boolean Update(Booking entity) {
-		Customer customer = entity.getCustomer();
-		Room room = entity.getRoom();
+		// TODO Auto-generated method stub
+		return false;
+	}
+	
+	//We should only ever be updating the room number, start date, or end date of a reservation.
+	//if we ever needed to update the customer, might as well delete the reservation and create a
+	//new one from scratch. If we don't need to update all fields available in the method header, we
+	//can set the unchanging fields to be the same as they were before. 
+	public boolean Update(int bookingID, int roomNumber, Date startDate, Date endDate) {
+		Connection connection = ConnectionFactory.getConnection();
+		String query = "UPDATE ROOM_BOOKING SET " +
+				"RoomNumber = " + roomNumber + ", " +
+				"StartDate = " + startDate + ", " + //TODO: find out if I need something around the date value
+				"EndDate = " + endDate +
+				" WHERE BookingID = " + bookingID;
+		
+		try {
+            Statement stmt = connection.createStatement();
+            stmt.executeQuery(query);
+            return true;
+            
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+		return false;
+	}
+	/*
+	@Override
+	public boolean Update(Booking entity) {
 		
 		Connection connection = ConnectionFactory.getConnection();
 		String query = "UPDATE ROOM_BOOKING SET " +
 				"StartDate = " + entity.getStartDate() + ", " + //TODO: find out if I need something around the date value
 				"EndDate = " + entity.getEndDate() +
-				" WHERE RoomNumber = " + room.getRoomNumber() + 
-					" AND CustomerID = " + customer.getId();
+				" WHERE BookingID = " + entity.getBookingID();
 		
         try {
             Statement stmt = connection.createStatement();
@@ -58,7 +84,8 @@ public class BookingDAO implements IRepository<Booking>{
             return false;
         }
 	}
-
+	*/
+	
 	@Override
 	public boolean Delete(int id) {
 		// TODO Auto-generated method stub

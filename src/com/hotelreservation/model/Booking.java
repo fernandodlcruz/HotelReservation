@@ -7,7 +7,7 @@ public class Booking {
 	private Customer customer;
 	private Date startDate;
 	private Date endDate;
-	
+
 	public Booking(int bookingID, Room room, Customer customer, Date startDate, Date endDate) {
 		
 		this.bookingID = bookingID;
@@ -17,6 +17,14 @@ public class Booking {
 		this.endDate = endDate;
 	}
 
+	public int getBookingID() {
+		return bookingID;
+	}
+
+	public void setBookingID(int bookingID) {
+		this.bookingID = bookingID;
+	}
+	
 	public Room getRoom() {
 		return room;
 	}
