@@ -88,7 +88,7 @@ public class RoomDAO implements IRepository<Room> {
             ResultSet rs = stmt.executeQuery(query);
             if(rs.next())
             {
-                room = new Room(rs.getInt("RoomNumber"), rs.getInt("RoomCapacity"), rs.getDouble("Price"), rs.getString("Description"));
+                room = new Room(rs.getInt("RoomNumber"), rs.getInt("Capacity"), rs.getDouble("Price"), rs.getString("Description"));
             }
             
             rs.close();
