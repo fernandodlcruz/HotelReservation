@@ -24,7 +24,7 @@ public class SearchRoomService implements ISearch<Room> {
         while(itr.hasNext()) {
         	room = itr.next();
         	
-        	for(Booking booking : room.getBooking()) {
+        	for(Booking booking : room.getListBooking()) {
 	            if(CompareDateRangeService.checkForDateClash(filter.getCheckInDate(), filter.getCheckOutDate(), booking.getStartDate(), booking.getEndDate())) {
 	                itr.remove();
 	                break;
