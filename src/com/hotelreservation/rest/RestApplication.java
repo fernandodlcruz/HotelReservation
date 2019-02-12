@@ -12,6 +12,7 @@ public class RestApplication extends Application {
 		Set<Class<?>> s = new HashSet<Class<?>>();
 		s.add(CustomerResource.class);
 		s.add(SearchRoomResource.class);
+		s.add(BookingResource.class);
 		return s;
 	}
 }

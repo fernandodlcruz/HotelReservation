@@ -9,7 +9,7 @@ import com.hotelreservation.model.Room;
 import com.hotelreservation.repository.RoomDAO;
 
 public class SearchRoomService implements ISearch<Room> {
-	private static RoomDAO dao = new RoomDAO();
+	private RoomDAO dao = new RoomDAO();
 	
 	@Override
 	public List<Room> ListResult(Filter filter) {

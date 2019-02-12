@@ -11,6 +11,8 @@ public class Booking {
 	private Date startDate;
 	private Date endDate;
 
+	public Booking() {}
+	
 	public Booking(int bookingID, Room room, Customer customer, Date startDate, Date endDate) {
 		
 		this.bookingID = bookingID;
