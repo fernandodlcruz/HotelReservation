@@ -12,7 +12,10 @@ public class FilterRoom extends Filter {
 		// TODO Auto-generated constructor stub
 	}
 
-	public FilterRoom(int roomNumber, Date checkInDate, Date checkOutDate,int capacity) {
+	public FilterRoom(int roomNumber, 
+			Date checkInDate, 
+			Date checkOutDate,
+			int capacity) {
 		super(roomNumber, checkInDate, checkOutDate, capacity);
 		// TODO Auto-generated constructor stub
 	}

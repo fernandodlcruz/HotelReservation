@@ -1,9 +1,13 @@
 package com.hotelreservation.model;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import javax.xml.bind.annotation.XmlRootElement;
+
+@XmlRootElement
 public class Filter {
-	protected int roomNumber;	
+	protected int roomNumber;
 	protected Date checkInDate;
 	protected Date checkOutDate;
 	protected int roomCapacity;

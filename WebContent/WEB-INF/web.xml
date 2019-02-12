@@ -8,7 +8,15 @@
  <servlet>
   <servlet-name>Jersey REST Service</servlet-name>
   <servlet-class>org.glassfish.jersey.servlet.ServletContainer</servlet-class>
-
+	<!-- Register resources and providers under com.vogella.jersey.first package. -->
+        <init-param>
+            <param-name>jersey.config.server.provider.packages</param-name>
+            <param-value>com.vogella.jersey.first</param-value>
+        </init-param>
+        <init-param>
+            <param-name>com.sun.jersey.api.json.POJOMappingFeature</param-name>
+            <param-value>true</param-value>
+        </init-param>
   <init-param>
    <param-name>javax.ws.rs.Application</param-name>
    <param-value>com.hotelreservation.rest.RestApplication</param-value>

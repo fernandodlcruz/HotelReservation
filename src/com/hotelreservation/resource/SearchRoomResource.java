@@ -2,12 +2,16 @@ package com.hotelreservation.resource;
 
 import java.util.List;
 
+import javax.ws.rs.Consumes;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
-import com.hotelreservation.model.Filter;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.SerializationFeature;
+import com.hotelreservation.model.FilterRoom;
 import com.hotelreservation.model.Room;
 import com.hotelreservation.service.SearchRoomService;
 
@@ -15,11 +19,22 @@ import com.hotelreservation.service.SearchRoomService;
 public class SearchRoomResource {
 	@POST
 	@Produces(MediaType.APPLICATION_JSON)
-	public List<Room> ListRooms(Filter filter) {
+	@Consumes(MediaType.APPLICATION_JSON)
+	public String ListRooms(FilterRoom filter) {
 		SearchRoomService searchRoom = new SearchRoomService();
 		
 		List<Room> listRoom = searchRoom.ListResult(filter);
 		
-		return listRoom;
+		ObjectMapper objectMapper = new ObjectMapper();
+	    objectMapper.enable(SerializationFeature.INDENT_OUTPUT);
+	    String arrayToJson = "";
+	    try {
+			arrayToJson = objectMapper.writeValueAsString(listRoom);
+		} catch (JsonProcessingException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		return arrayToJson;
 	}
 }
