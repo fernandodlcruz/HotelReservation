@@ -14,7 +14,6 @@ import com.hotelreservation.model.Customer;
 import com.hotelreservation.model.Room;
 
 public class BookingDAO implements IRepository<Booking>{
-	//TODO: the ROOM_BOOKING table schema changed, update queries to reflect this. 
 	@Override
 	public boolean Insert(Booking entity) {
 		Customer customer = entity.getCustomer();
@@ -135,6 +134,44 @@ public class BookingDAO implements IRepository<Booking>{
         }
         
         return null;
+	}
+	
+	
+	//This method is to be used when we want to pull-up a customer's reservations
+	public List<Booking> GetByCustomer(int customerID) {
+		List<Booking> bookings = new ArrayList<Booking>();
+		
+		Connection connection = ConnectionFactory.getConnection();
+		
+		//Select all the bookings with the given customer id.
+		String query = "SELECT * FROM ROOM_BOOKING " +
+				"WHERE CustomerID = " + customerID;
+		
+		try {
+			Statement stmt = connection.createStatement();
+            ResultSet rs = stmt.executeQuery(query);
+            
+            RoomDAO rmDAO = new RoomDAO();
+            CustomerDAO cuDAO = new CustomerDAO();
+            
+            while(rs.next()) {
+            	Room room = rmDAO.GetById(rs.getInt("RoomID"));
+            	Customer customer = cuDAO.GetById(rs.getInt("CustomerID"));
+            	
+            	bookings.add(new Booking(rs.getInt("BookingID"),
+            			room,
+            			customer,
+            			rs.getDate("StartDate"),
+            			rs.getDate("EndDate")));
+            }
+
+        	return bookings;
+			
+		} catch (SQLException ex) {
+            ex.printStackTrace();            
+        }
+
+		return null;
 	}
 	
 	//Return all Rooms in ROOM_BOOKING with the given RoomNumber.
