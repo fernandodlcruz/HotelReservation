@@ -41,7 +41,7 @@ public class Room {
 		return price;
 	}
 
-	public void setPrice(int prc) {
+	public void setPrice(double prc) {
 		this.price = prc;
 	}
 	public String getDescription() {

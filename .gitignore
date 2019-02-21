@@ -56,3 +56,6 @@ target/
 .scala_dependencies
 .worksheet
 /target/
+
+# Website
+ui/node_modules

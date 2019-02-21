@@ -1,4 +1,4 @@
-const API_URL = "http://api.openweathermap.org/data/2.5/weather?";
+const API_URL = "http://localhost:8080/HotelReservation";
 const API_FORMAT = "";
 const API_KEY = "&appid=14882ec94c410de6b463d915503d4e16";
 
@@ -18,25 +18,59 @@ $('#btnSearch').click(function(e) {
     }
 
     // Call the API
-    $.ajax({
-        url: API_URL,
-        type: "POST",
-        dataType: "jsonp",
-        data: {
-            "roomNumber": 0, 
-            "checkInDate": new Date(checkIn), 
-            "checkOutDate": new Date(checkOut), 
-            "roomCapacity": guests
-        },
-        crossDomain: true,
-        success: function(data) {
-            console.log(JSON.stringify(data));
-            // TODO: Loop through the returned data
-            // TODO: Create function to create card
-        },
-        error: function(xhr, ajaxOptions, thrownError) {
-            console.log(xhr.status);
-            console.log(thrownError);
-        }
-    });    
+    var url = API_URL + '/listrooms?roomNumber=0' + '&checkInDate=' + new Date(checkIn.val()).toISOString() + 
+                '&checkOutDate=' + new Date(checkOut.val()).toISOString() + '&roomCapacity=' + guests.val() + '&callback=?';
+
+    $.getJSON(url, function(result) {
+        result.forEach(room => {
+            createCard(room);
+        });
+      });
+
+    // $.ajax({
+    //     url: API_URL + '/listrooms?roomNumber=0' + 
+    //     '&checkInDate=' + new Date(checkIn.val()).toISOString() + 
+    //     '&checkOutDate=' + new Date(checkOut.val()).toISOString() + 
+    //     '&roomCapacity=' + guests.val(),
+    //     type: "GET",
+    //     dataType: "json",
+    //     //jsonp: "callback",
+    //     //contentType: "application/json; charset=utf-8",
+    //     /*data: {
+    //         "roomNumber": 0, 
+    //         "checkInDate": new Date(checkIn), 
+    //         "checkOutDate": new Date(checkOut), 
+    //         "roomCapacity": guests
+    //     },
+    //     crossDomain: true,*/
+    //     success: function(data) {
+    //         console.log(JSON.stringify(data));
+    //         // TODO: Loop through the returned data
+    //         // TODO: Create function to create card
+    //     },
+    //     error: function(xhr, ajaxOptions, thrownError) {
+    //         console.log(xhr.status);
+    //         console.log(thrownError);
+    //     }
+    // });
 });
+
+function createCard(obj) {
+    var rnd = Math.floor(Math.random() * 6);
+
+    $('#listRooms').append(
+            '<div class="card horizontal">' +
+                '<div class="card-image">' +
+                '<img src="images/room-' + rnd + '.jpg">' +
+                '</div>' +
+                '<div class="card-stacked">' +
+                '<div class="card-content">' +
+                '    <p>' + obj.description + '</p>' +
+                '</div>' +
+                '<div class="card-action">$' +
+                obj.price + '/night ' +
+                '    <a href="#">Make Reservation</a>' +
+                '</div>' +
+                '</div>' +
+            '</div>');
+}
