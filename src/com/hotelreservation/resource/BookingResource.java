@@ -1,6 +1,7 @@
 package com.hotelreservation.resource;
 
 
+import java.sql.Date;
 import java.util.List;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
@@ -26,6 +27,34 @@ public class BookingResource {
 			return "{\"status\": \"ok\"}";
 		} else {
 			return "{\"status\": \"nok\", \"message\": \"Reservation failed to complete\"}";
+		}
+	}
+	
+	@POST
+	@Path("/cancel-reservation")
+	@Produces(MediaType.APPLICATION_JSON)
+	@Consumes(MediaType.APPLICATION_JSON)
+	public String cancelReservation(int bookingID) {
+		BookingService bookService = new BookingService();
+		
+		if (bookService.cancelReservation(bookingID)) {
+			return "{\"status\": \"deleted\"}";
+		} else {
+			return "{\"status\": \"no_deletion\", \"message\": \"Reservation does not exist\"}";
+		}
+	}
+	
+	@POST
+	@Path("/update-reservation")
+	@Produces(MediaType.APPLICATION_JSON)
+	@Consumes(MediaType.APPLICATION_JSON)
+	public String updateReservation(int bookingID, int roomNumber, Date startDate, Date endDate) { //Don't know if we can use Date type or if we will need to use String and then cast it to Date.
+		BookingService bookService = new BookingService();
+		
+		if (bookService.updateReservation(bookingID, roomNumber, startDate, endDate)) {
+			return "{\"status\": \"updated\"}";
+		} else {
+			return "{\"status\": \"no_update\", \"message\": \"Reservation does not exist\"}";
 		}
 	}
 	
