@@ -1,6 +1,5 @@
 package com.hotelreservation.service;
 
-import java.util.ArrayList;
 import java.util.List;
 import com.hotelreservation.model.Booking;
 import com.hotelreservation.repository.BookingDAO;
