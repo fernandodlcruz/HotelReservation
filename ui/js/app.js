@@ -1,8 +1,4 @@
-const API_URL = "http://localhost:8080/HotelReservation";
-const API_FORMAT = "";
-const API_KEY = "&appid=14882ec94c410de6b463d915503d4e16";
-
-$(document).ready(function(){
+$(document).ready(function() {
     $('.datepicker').datepicker();
 });
 
@@ -25,7 +21,7 @@ $('#btnSearch').click(function(e) {
         result.forEach(room => {
             createCard(room);
         });
-      });
+    });
 
     // $.ajax({
     //     url: API_URL + '/listrooms?roomNumber=0' + 
@@ -59,18 +55,19 @@ function createCard(obj) {
     var rnd = Math.floor(Math.random() * 6);
 
     $('#listRooms').append(
-            '<div class="card horizontal">' +
-                '<div class="card-image">' +
-                '<img src="images/room-' + rnd + '.jpg">' +
-                '</div>' +
-                '<div class="card-stacked">' +
-                '<div class="card-content">' +
-                '    <p>' + obj.description + '</p>' +
-                '</div>' +
-                '<div class="card-action">$' +
-                obj.price + '/night ' +
-                '    <a href="#">Make Reservation</a>' +
-                '</div>' +
-                '</div>' +
-            '</div>');
+        '<div class="card horizontal">' +
+            '<div class="card-image">' +
+            '<img src="images/room-' + rnd + '.jpg">' +
+            '</div>' +
+            '<div class="card-stacked">' +
+            '<div class="card-content">' +
+            '    <p>' + obj.description + '</p>' +
+            '</div>' +
+            '<div class="card-action">$' +
+            obj.price + '/night ' +
+            '    <a href="#" onClick="window.location=\'room.html?id=' + obj.roomNumber + '\'">Make Reservation</a>' +
+            '</div>' +
+            '</div>' +
+        '</div>'
+    );
 }

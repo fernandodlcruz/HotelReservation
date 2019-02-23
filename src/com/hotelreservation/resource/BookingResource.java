@@ -15,7 +15,7 @@ public class BookingResource {
 	@Path("/make-reservation")
 	@Produces(MediaType.APPLICATION_JSON)
 	@Consumes(MediaType.APPLICATION_JSON)
-	public String ListRooms(Booking booking) {
+	public String MakeReservation(Booking booking) {
 		BookingService bookService = new BookingService();
 		
 		if (bookService.makeReservation(booking)) {

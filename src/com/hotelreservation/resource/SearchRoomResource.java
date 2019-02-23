@@ -7,11 +7,14 @@ import java.util.List;
 
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
+import javax.ws.rs.core.MediaType;
 
 import org.glassfish.jersey.server.JSONP;
 
+import com.hotelreservation.model.Customer;
 import com.hotelreservation.model.FilterRoom;
 import com.hotelreservation.model.Room;
 import com.hotelreservation.service.SearchRoomService;
@@ -41,5 +44,15 @@ public class SearchRoomResource {
 		List<Room> listRoom = searchRoom.ListResult(filter);
 		
 		return listRoom;
+	}
+	
+	@GET
+	@Path("/{roomId}")
+	@Produces({"application/x-javascript"})
+	@JSONP(callback="jsonp",queryParam="callback")
+	public Room GetRoomById(@PathParam("roomId") int roomId) {
+		SearchRoomService searchRoom = new SearchRoomService();
+		
+		return searchRoom.GetById(roomId);
 	}
 }
