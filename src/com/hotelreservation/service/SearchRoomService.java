@@ -35,4 +35,9 @@ public class SearchRoomService implements ISearch<Room> {
 		// Return filtered list
 		return listRooms;
 	}
+	
+	public Room GetById(int roomId) {
+		// Return filtered list
+		return dao.GetById(roomId);
+	}
 }
