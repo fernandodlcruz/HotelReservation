@@ -1,13 +1,13 @@
 $(document).ready(function() {
     $('.tabs').tabs();
-    //loadRoom(qs('id'));
+    loadRoom(qs('id'));
 });
 
 function loadRoom(id) {
-    var url = API_URL + '/listrooms/' + id;
+    var url = API_URL + '/listrooms/get-room?roomId=' + id + '&callback=?';
 
     $.getJSON(url, function(result) {
-        createCard(room);
+        createCard(result);
     });
 }
 
@@ -25,7 +25,7 @@ function createCard(obj) {
             '</div>' +
             '<div class="card-action">$' +
             obj.price + '/night ' +
-            '    Capacity:' + obj.capacity +
+            '    <br><i class="small material-icons">group</i> ' + obj.roomCapacity +
             '</div>' +
             '</div>' +
         '</div>'

@@ -47,10 +47,10 @@ public class SearchRoomResource {
 	}
 	
 	@GET
-	@Path("/{roomId}")
+	@Path("/get-room")
 	@Produces({"application/x-javascript"})
 	@JSONP(callback="jsonp",queryParam="callback")
-	public Room GetRoomById(@PathParam("roomId") int roomId) {
+	public Room GetRoomById(@QueryParam("callback") String callback, @QueryParam("roomId") int roomId) {
 		SearchRoomService searchRoom = new SearchRoomService();
 		
 		return searchRoom.GetById(roomId);
