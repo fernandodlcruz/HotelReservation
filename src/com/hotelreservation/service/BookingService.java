@@ -1,6 +1,5 @@
 package com.hotelreservation.service;
 
-import java.sql.Date;
 import java.util.List;
 import com.hotelreservation.model.Booking;
 import com.hotelreservation.repository.BookingDAO;
@@ -20,7 +19,7 @@ public class BookingService {
 		return dao.Delete(bookingID);
 	}
 	
-	public boolean updateReservation(int bookingID, int roomNumber, Date startDate, Date endDate) {
-		return dao.Update(bookingID, roomNumber, startDate, endDate);
+	public boolean updateReservation(Booking booking) {
+		return dao.Update(booking);
 	}
 }

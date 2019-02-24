@@ -1,7 +1,9 @@
 package com.hotelreservation.resource;
 
 
-import java.sql.Date;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;  
+import java.util.Date;
 import java.util.List;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
@@ -48,10 +50,24 @@ public class BookingResource {
 	@Path("/update-reservation")
 	@Produces(MediaType.APPLICATION_JSON)
 	@Consumes(MediaType.APPLICATION_JSON)
-	public String updateReservation(int bookingID, int roomNumber, Date startDate, Date endDate) { //Don't know if we can use Date type or if we will need to use String and then cast it to Date.
+	public String updateReservation(int bookingID, int roomNumber, String startDate, String endDate) {
 		BookingService bookService = new BookingService();
 		
-		if (bookService.updateReservation(bookingID, roomNumber, startDate, endDate)) {
+		Date sd;
+		Date nd;
+		try {
+			sd = new SimpleDateFormat("yyyy-mm-dd").parse(startDate);
+			nd = new SimpleDateFormat("yyyy-mm-dd").parse(endDate);
+		} catch (ParseException e) {
+			
+			e.printStackTrace();
+			return "{\"status\": \"no_update\", \"message\": \"Wrong date format. expected yyyy-mm-dd.\"}";
+		}
+		
+		//Update is not touching the Customer name or first name so they can be null at this step.
+		Booking booking = new Booking(bookingID, null, null, sd, nd); 
+		
+		if (bookService.updateReservation(booking)) {
 			return "{\"status\": \"updated\"}";
 		} else {
 			return "{\"status\": \"no_update\", \"message\": \"Reservation does not exist\"}";
@@ -67,6 +83,6 @@ public class BookingResource {
 		
         listBookings = bs.getBookings(customerID);
 		
-		return listBookings; //If the customer has no bookings then this will return null. Is that OK?
+		return listBookings;
 	}
 }

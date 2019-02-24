@@ -1,11 +1,9 @@
 package com.hotelreservation.repository;
 
 import java.sql.Connection;
-import java.sql.Date;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -36,17 +34,12 @@ public class BookingDAO implements IRepository<Booking>{
         }
         return false;
 	}
-
-	@Override
-	public boolean Update(Booking entity) {
-		// TODO Auto-generated method stub
-		return false;
-	}
 	
 	//We should only ever be updating the room number, start date, or end date of a reservation.
 	//if we ever needed to update the customer, might as well delete the reservation and create a
 	//new one from scratch. If we don't need to update all fields available in the method header, we
-	//can set the unchanging fields to be the same as they were before. 
+	//can set the unchanging fields to be the same as they were before.
+	/*
 	public boolean Update(int bookingID, int roomNumber, Date startDate, Date endDate) {
 		Connection connection = ConnectionFactory.getConnection();
 		String query = "UPDATE ROOM_BOOKING SET " +
@@ -65,12 +58,14 @@ public class BookingDAO implements IRepository<Booking>{
         }
 		return false;
 	}
-	/*
+	*/
+	
 	@Override
 	public boolean Update(Booking entity) {
 		
 		Connection connection = ConnectionFactory.getConnection();
 		String query = "UPDATE ROOM_BOOKING SET " +
+				"RoomNumber = " + entity.getRoom().getRoomNumber() + ", " +
 				"StartDate = " + entity.getStartDate() + ", " + //TODO: find out if I need something around the date value
 				"EndDate = " + entity.getEndDate() +
 				" WHERE BookingID = " + entity.getBookingID();
@@ -85,7 +80,6 @@ public class BookingDAO implements IRepository<Booking>{
             return false;
         }
 	}
-	*/
 	
 	@Override
 	public boolean Delete(int id) {
