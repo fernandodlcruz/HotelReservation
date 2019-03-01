@@ -9,25 +9,44 @@ import java.sql.Statement;
 
 public class CustomerDAO implements IRepository<Customer> {
 
+	private Connection conn;
+	
+	public CustomerDAO() {
+		conn = ConnectionFactory.getConnection();
+	}
+	
 	@Override
 	public boolean Insert(Customer entity) {
-		Connection connection = ConnectionFactory.getConnection();
+		Statement stmt = null;
+		
 		String query = "INSERT INTO CUSTOMER (FirstName, LastName, Email, Phone, VendorID) "
-				+ "VALUES ("
-				+ entity.getFirstName() + ", " 
-				+ entity.getLastName() + ", " 
-				+ entity.getEmail() + ", " 
+				+ "VALUES ('"
+				+ entity.getFirstName() + "', '" 
+				+ entity.getLastName() + "', '" 
+				+ entity.getEmail() + "', " 
 				+ entity.getPhone() + ", "
 				+ entity.getVendorID() + ")";
 		
         try {
-            Statement stmt = connection.createStatement();
-            stmt.executeQuery(query);
+            stmt = conn.createStatement();
+            stmt.executeUpdate(query);
             return true;
             
         } catch (SQLException ex) {
             ex.printStackTrace();
-        }
+        } finally {
+            try {
+                if(stmt!=null)
+                   stmt.close();
+             } catch(SQLException se2) {
+             }// nothing we can do
+             try{
+                if(conn!=null)
+                   conn.close();
+             } catch(SQLException se) {
+                se.printStackTrace();
+             }
+         }
         
         return false;
 	}

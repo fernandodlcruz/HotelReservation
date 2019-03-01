@@ -41,13 +41,8 @@ public class CustomerService {
 		return cust;
 	}
 
-	public static Customer createCustomer(Customer customer) {
-		Customer cust = new Customer();
-		
-		cust.setFirstName(customer.getFirstName());
-		cust.setLastName(customer.getLastName());
-		cust.setId(id);
-		id++;
-		return cust;
+	public Customer createCustomer(Customer customer) {
+		// TODO: Get Customer ID to return to the page
+		return null ; //dao.Insert(customer);
 	}
 }

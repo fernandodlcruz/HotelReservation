@@ -17,16 +17,18 @@ public class BookingDAO implements IRepository<Booking>{
 		Customer customer = entity.getCustomer();
 		Room room = entity.getRoom();
 		
+		java.text.SimpleDateFormat sdf = new java.text.SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		
 		Connection connection = ConnectionFactory.getConnection();
 		String query = "INSERT INTO ROOM_BOOKING (RoomNumber, CustomerID, StartDate, EndDate) VALUES (" + 
 				room.getRoomNumber() + ", " +
-				customer.getId() + ", " +
-				entity.getStartDate() + ", " +
-				entity.getEndDate() + ")";
+				customer.getId() + ", '" +
+				sdf.format(entity.getStartDate()) + "', '" +
+				sdf.format(entity.getEndDate()) + "')";
 		
         try {
             Statement stmt = connection.createStatement();
-            stmt.executeQuery(query);
+            stmt.executeUpdate(query);
             return true;
             
         } catch (SQLException ex) {
@@ -184,7 +186,7 @@ public class BookingDAO implements IRepository<Booking>{
             CustomerDAO cuDAO = new CustomerDAO();
             
             while(rs.next()) {
-            	Room room = rmDAO.GetById(rs.getInt("RoomID"));
+            	Room room = rmDAO.GetById(rs.getInt("RoomNumber"));
             	Customer customer = cuDAO.GetById(rs.getInt("CustomerID"));
             	
             	bookings.add(new Booking(rs.getInt("BookingID"),

@@ -46,7 +46,7 @@ public class BookingResource {
 		}
 	}
 	
-	@POST
+	/*@POST
 	@Path("/update-reservation")
 	@Produces(MediaType.APPLICATION_JSON)
 	@Consumes(MediaType.APPLICATION_JSON)
@@ -72,7 +72,7 @@ public class BookingResource {
 		} else {
 			return "{\"status\": \"no_update\", \"message\": \"Reservation does not exist\"}";
 		}
-	}
+	}*/
 	
 	@GET
 	@Produces({"application/x-javascript"})
