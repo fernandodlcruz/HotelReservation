@@ -2,6 +2,7 @@ package com.hotelreservation.repository;
 
 import java.util.List;
 import com.hotelreservation.model.Customer;
+
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -17,7 +18,11 @@ public class CustomerDAO implements IRepository<Customer> {
 	
 	@Override
 	public boolean Insert(Customer entity) {
-		Statement stmt = null;
+		return false;
+	}
+	
+	public Customer CreateCustomer(Customer entity) {
+		java.sql.PreparedStatement stmt = null;
 		
 		String query = "INSERT INTO CUSTOMER (FirstName, LastName, Email, Phone, VendorID) "
 				+ "VALUES ('"
@@ -28,10 +33,18 @@ public class CustomerDAO implements IRepository<Customer> {
 				+ entity.getVendorID() + ")";
 		
         try {
-            stmt = conn.createStatement();
-            stmt.executeUpdate(query);
-            return true;
+            //stmt = conn.createStatement();
+        	stmt = conn.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
+            stmt.executeUpdate();
             
+            try (ResultSet generatedKeys = stmt.getGeneratedKeys()) {
+                if (generatedKeys.next()) {
+                    entity.setId(generatedKeys.getInt(1));
+                }
+                else {
+                    throw new SQLException("Creating user failed, no ID obtained.");
+                }
+            }
         } catch (SQLException ex) {
             ex.printStackTrace();
         } finally {
@@ -48,7 +61,7 @@ public class CustomerDAO implements IRepository<Customer> {
              }
          }
         
-        return false;
+        return entity;
 	}
 
 	@Override
@@ -77,6 +90,29 @@ public class CustomerDAO implements IRepository<Customer> {
 	public Customer GetById(int id) {
 		Connection connection = ConnectionFactory.getConnection();
 		String query = "SELECT * FROM CUSTOMER WHERE CustomerID = " + id;
+		
+        try {
+            Statement stmt = connection.createStatement();
+            ResultSet rs = stmt.executeQuery(query);
+            if(rs.next())
+            {
+                Customer customer = new Customer(rs.getInt("CustomerID"),
+                		rs.getString("FirstName"),
+                		rs.getString("LastName"),
+                		rs.getString("Email"),
+                		rs.getString("Phone"),
+                		rs.getInt("VendorID"));
+                return customer;
+            }
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+        return null;
+	}
+	
+	public Customer GetByEmailVendor(String email, int vendorID) {
+		Connection connection = ConnectionFactory.getConnection();
+		String query = "SELECT * FROM CUSTOMER WHERE Email = '" + email + "' AND VendorID = " + vendorID;
 		
         try {
             Statement stmt = connection.createStatement();

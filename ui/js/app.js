@@ -2,7 +2,7 @@ $(document).ready(function() {
     $('.datepicker').datepicker();
 });
 
-$('#btnSearch').click(function(e) {
+$('#btnSearch').click(function() {
     var checkIn = $('#checkIn');
     var checkOut = $('#checkOut');
     var guests = $('#numberGuests');
@@ -19,6 +19,7 @@ $('#btnSearch').click(function(e) {
 
     $.getJSON(url, function(result) {
         result.forEach(room => {
+            $('#listRooms').empty();
             createCard(room);
         });
     });
@@ -65,7 +66,8 @@ function createCard(obj) {
             '</div>' +
             '<div class="card-action">$' +
             obj.price + '/night ' +
-            '    <a href="#" onClick="window.location=\'room.html?id=' + obj.roomNumber + '\'">Make Reservation</a>' +
+            '    <a href="#" onClick="window.location=\'room.html?id=' + obj.roomNumber + 
+            '&start=' + $('#checkIn').val() + '&end=' + $('#checkOut').val() + '\'">Make Reservation</a>' +
             '</div>' +
             '</div>' +
         '</div>'
