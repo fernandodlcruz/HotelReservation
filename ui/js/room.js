@@ -39,7 +39,6 @@ $('#btnLogin').click(function() {
                 '&vendorId=' + VENDOR_ID + '&callback=?';
 
     $.getJSON(url, function(result) {
-        console.log(JSON.stringify(result));
         if (result && result.id > 0) {
             // Hide authentication
             $('#auth').hide();
@@ -74,18 +73,32 @@ $('#btnSignup').click(function() {
     });
 });
 
+function ConfirmReservation() {
+    user = JSON.parse(localStorage.getItem('user'));
+
+    var url = API_URL + '/booking/make-reservation?roomNumber=' + qs('id') +
+                '&customerId=' + user.id +
+                '&startDate=' + new Date(qs('start')).toISOString() +
+                '&endDate=' + new Date(qs('end')).toISOString() + '&callback=?';
+
+    $.getJSON(url, function(result) {
+        M.toast({html: result.message});
+        window.location='index.html';
+    });
+}
+
 function createUserInfo(obj) {
-    var rnd = Math.floor(Math.random() * 6);
+    localStorage.setItem('user', JSON.stringify(obj));
 
     $('#user').append(
         '<div class="card">' +
             '<div class="card-content">' +
             '    <span class="card-title">' + obj.firstName + ' ' + obj.lastName + '</span>' +
-            '    <p>' + obj.email + '</p>' +
-            '    <p>' + obj.phone + '</p>' +
+            '    <p><i class="material-icons prefix">email</i>' + obj.email + '</p>' +
+            '    <p><i class="material-icons prefix">phone</i>' + obj.phone + '</p>' +
             '</div>' +
             '<div class="card-action">' +
-            '    <a class="waves-effect waves-light btn" id="' + obj.id + '">Confirm Reservation</a>' +
+            '    <a class="waves-effect waves-light btn" id="btnConfirmReservation" onClick="ConfirmReservation();">Confirm Reservation</a>' +
             '</div>' +
         '</div>'
     );

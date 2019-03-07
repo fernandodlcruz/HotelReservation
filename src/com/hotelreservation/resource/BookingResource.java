@@ -1,9 +1,9 @@
 package com.hotelreservation.resource;
 
 
+import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;  
-import java.util.Date;
 import java.util.List;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
@@ -14,21 +14,43 @@ import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 import org.glassfish.jersey.server.JSONP;
 import com.hotelreservation.model.Booking;
+import com.hotelreservation.model.Customer;
+import com.hotelreservation.model.Room;
 import com.hotelreservation.service.BookingService;
 
 @Path("booking")
 public class BookingResource {
-	@POST
+	@GET
 	@Path("/make-reservation")
-	@Produces(MediaType.APPLICATION_JSON)
-	@Consumes(MediaType.APPLICATION_JSON)
-	public String MakeReservation(Booking booking) {
+	@Produces({"application/x-javascript"})
+	@JSONP(callback="jsonp",queryParam="callback")
+	public String MakeReservation(@QueryParam("callback") String callback,
+			@QueryParam("roomNumber") int roomNumber,
+			@QueryParam("customerId") int customerId,
+			@QueryParam("startDate") String startDate,
+			@QueryParam("endDate") String endDate) {
+		DateFormat df = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSXXX");
+		
 		BookingService bookService = new BookingService();
+		Customer cust = new Customer();
+		Room room = new Room();
+		Booking booking = new Booking();
+		
+		try {
+			cust.setId(customerId);
+			room.setRoomNumber(roomNumber);
+			booking.setStartDate(df.parse(startDate));
+			booking.setEndDate(df.parse(endDate));
+			booking.setCustomer(cust);
+			booking.setRoom(room);
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
 		
 		if (bookService.makeReservation(booking)) {
-			return "{\"status\": \"ok\"}";
+			return "{\"status\": \"ok\", \"message\": \"Reservation complete successfuly!\"}";
 		} else {
-			return "{\"status\": \"nok\", \"message\": \"Reservation failed to complete\"}";
+			return "{\"status\": \"nok\", \"message\": \"Reservation failed to complete.\"}";
 		}
 	}
 	

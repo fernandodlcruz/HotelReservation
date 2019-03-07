@@ -28,8 +28,8 @@ public class CustomerResource {
 	@Produces({"application/x-javascript"})
 	@JSONP(callback="jsonp",queryParam="callback")
 	public Customer getCustomer(@QueryParam("callback") String callback,
-			@PathParam("email") String email,
-			@PathParam("vendorId") int vendorID) {
+			@QueryParam("email") String email,
+			@QueryParam("vendorId") int vendorID) {
 		CustomerService custService = new CustomerService();
 		
 		return custService.getCustomer(email, vendorID);
