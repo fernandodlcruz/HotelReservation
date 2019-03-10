@@ -1,5 +1,7 @@
 $(document).ready(function() {
     $('.datepicker').datepicker();
+
+    checkLoggedIn();
 });
 
 $('#btnSearch').click(function() {

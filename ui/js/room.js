@@ -1,6 +1,7 @@
 $(document).ready(function() {
     $('.tabs').tabs();
     loadRoom(qs('id'));
+    checkLoggedIn();
 });
 
 function loadRoom(id) {
@@ -47,10 +48,11 @@ $('#btnLogin').click(function() {
 
             // Show user Info and Make reservation button
             $('#user').show();
+            checkLoggedIn();
         } else {
             M.toast({html: 'Customer not found in the system. Please, try again.'});
         }
-    });
+    });    
 });
 
 $('#btnSignup').click(function() {
@@ -69,6 +71,7 @@ $('#btnSignup').click(function() {
 
             // Show user Info and Make reservation button
             $('#user').show();
+            checkLoggedIn();
         }
     });
 });
@@ -83,7 +86,7 @@ function ConfirmReservation() {
 
     $.getJSON(url, function(result) {
         M.toast({html: result.message});
-        window.location='index.html';
+        setTimeOut(window.location='index.html', 5000);
     });
 }
 

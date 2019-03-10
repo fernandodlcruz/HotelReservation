@@ -6,7 +6,8 @@ $(document).ready(function() {
         createUserInfo(user);
         $('#auth').hide();
         $('#user').show();
-    }    
+    }
+    checkLoggedIn();
 });
 
 $('#btnLogin').click(function() {
@@ -22,10 +23,11 @@ $('#btnLogin').click(function() {
 
             // Show user Info and Make reservation button
             $('#user').show();
+            checkLoggedIn();
         } else {
             M.toast({html: 'Customer not found in the system. Please, try again.'});
         }
-    });
+    });    
 });
 
 $('#btnSignup').click(function() {
@@ -44,6 +46,7 @@ $('#btnSignup').click(function() {
 
             // Show user Info and Make reservation button
             $('#user').show();
+            checkLoggedIn();
         }
     });
 });
