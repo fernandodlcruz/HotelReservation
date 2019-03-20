@@ -96,8 +96,9 @@ public class BookingResource {
 	
 	@GET
 	@Produces({"application/x-javascript"})
-	@JSONP(callback="jsonp",queryParam="customerID")
-	public List<Booking> getRoomBooking(@QueryParam("customerID") int customerID) {
+	@JSONP(callback="jsonp",queryParam="callback")
+	public List<Booking> getRoomBooking(@QueryParam("callback") String callback,
+			@QueryParam("customerID") int customerID) {
 		BookingService bs = new BookingService();
 		List<Booking> listBookings = null;
 		

@@ -115,7 +115,7 @@ public class BookingDAO implements IRepository<Booking>{
             
             if(rs.next())
             {
-            	Room room = rmDAO.GetById(rs.getInt("RoomID"));
+            	Room room = rmDAO.GetById(rs.getInt("RoomNumber"));
             	Customer customer = cuDAO.GetById(rs.getInt("CustomerID"));
             	
             	return new Booking(rs.getInt("BookingID"),
@@ -151,7 +151,7 @@ public class BookingDAO implements IRepository<Booking>{
             CustomerDAO cuDAO = new CustomerDAO();
             
             while(rs.next()) {
-            	Room room = rmDAO.GetById(rs.getInt("RoomID"));
+            	Room room = rmDAO.GetById(rs.getInt("RoomNumber"));
             	Customer customer = cuDAO.GetById(rs.getInt("CustomerID"));
             	
             	bookings.add(new Booking(rs.getInt("BookingID"),

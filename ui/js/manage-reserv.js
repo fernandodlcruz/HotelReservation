@@ -6,6 +6,7 @@ $(document).ready(function() {
         createUserInfo(user);
         $('#auth').hide();
         $('#user').show();
+        listReservation();
     }
     checkLoggedIn();
 });
@@ -24,6 +25,7 @@ $('#btnLogin').click(function() {
             // Show user Info and Make reservation button
             $('#user').show();
             checkLoggedIn();
+            listReservation();
         } else {
             M.toast({html: 'Customer not found in the system. Please, try again.'});
         }
@@ -63,4 +65,30 @@ function createUserInfo(obj) {
             '</div>' +
         '</div>'
     );
+}
+
+function listReservation() {
+    var user = JSON.parse(localStorage.getItem('user'));
+    var url = API_URL + '/booking?customerID=' + user.id + '&callback=?';
+
+    $.getJSON(url, function(result) {
+        console.log(JSON.stringify(result));
+        if (result) {
+            $('#myBookings .collection-item').empty();
+            
+            result.forEach(booking => {
+                $('#myBookings').append(
+                    '<li class="collection-item">' +
+                    '   <div>' +
+                    '       <b>Room #' + booking.room.roomNumber +
+                    '       </b>Check-in ' + new Date(booking.startDate).toLocaleDateString() +
+                    '       Check-out ' + new Date(booking.endDate).toLocaleDateString() +
+                    '       <a href="#!" class="secondary-content"><i class="material-icons small">cancel</i></a>' +
+                    '       <a href="#!" class="secondary-content"><i class="material-icons small">update</i></a>' +
+                    '   </div>' +
+                    '</li>'
+                );
+            });
+        }
+    });
 }
