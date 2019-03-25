@@ -94,7 +94,7 @@ public class RoomDAO implements IRepository<Room> {
             rs.close();
         } catch (SQLException ex) {
             ex.printStackTrace();
-        } finally {
+        /*} finally {
             try {
                 if(stmt!=null)
                    stmt.close();
@@ -105,7 +105,7 @@ public class RoomDAO implements IRepository<Room> {
                    conn.close();
              } catch(SQLException se) {
                 se.printStackTrace();
-             }
+             }*/
          }
         
 		return room;

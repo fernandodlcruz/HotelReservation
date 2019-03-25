@@ -6,6 +6,7 @@ import java.io.FileWriter;
 import java.util.List;
 import com.hotelreservation.model.Booking;
 import com.hotelreservation.repository.BookingDAO;
+import com.hotelreservation.repository.CustomerDAO;
 
 public class BookingService {
 	private BookingDAO dao = new BookingDAO();
@@ -33,9 +34,13 @@ public class BookingService {
 	
 	public boolean notifyHotel(Booking booking, String action) {
 		BufferedWriter writer = null;
+		CustomerDAO custDAO = new CustomerDAO();
+		
         try {
+        	booking.setCustomer(custDAO.GetById(booking.getCustomer().getId()));
+        	
             //create a temporary file
-            File logFile = new File("Room " + booking.getRoom().getRoomNumber() + " booked.txt");
+            File logFile = new File("Room " + booking.getRoom().getRoomNumber() + " " + action + ".txt");
 
             // This will output the full path where the file will be written to...
             System.out.println(logFile.getCanonicalPath());

@@ -33,7 +33,7 @@ public class BookingDAO implements IRepository<Booking>{
             
         } catch (SQLException ex) {
             ex.printStackTrace();
-        }
+        } 
         return false;
 	}
 	
@@ -64,17 +64,18 @@ public class BookingDAO implements IRepository<Booking>{
 	
 	@Override
 	public boolean Update(Booking entity) {
+		java.text.SimpleDateFormat sdf = new java.text.SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 		
 		Connection connection = ConnectionFactory.getConnection();
 		String query = "UPDATE ROOM_BOOKING SET " +
 				"RoomNumber = " + entity.getRoom().getRoomNumber() + ", " +
-				"StartDate = " + entity.getStartDate() + ", " + //TODO: find out if I need something around the date value
-				"EndDate = " + entity.getEndDate() +
-				" WHERE BookingID = " + entity.getBookingID();
+				"StartDate = '" + sdf.format(entity.getStartDate()) + "', " +
+				"EndDate = '" + sdf.format(entity.getEndDate()) +
+				"' WHERE BookingID = " + entity.getBookingID();
 		
         try {
             Statement stmt = connection.createStatement();
-            stmt.executeQuery(query);
+            stmt.executeUpdate(query);
             return true;
             
         } catch (SQLException ex) {
@@ -91,7 +92,7 @@ public class BookingDAO implements IRepository<Booking>{
 		
         try {
             Statement stmt = connection.createStatement();
-            stmt.executeQuery(query);
+            stmt.executeUpdate(query);
             return true;
             
         } catch (SQLException ex) {

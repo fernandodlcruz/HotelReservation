@@ -85,6 +85,7 @@ function listReservation() {
                     '       Check-out ' + new Date(booking.endDate).toLocaleDateString() +
                     '       <a href="#!" class="secondary-content"><i class="material-icons small">cancel</i></a>' +
                     '       <a href="#!" class="secondary-content"><i class="material-icons small">update</i></a>' +
+                    '       <input type="hidden" name="' + booking.bookingID + '" value="' + booking.bookingID + '" />' +
                     '   </div>' +
                     '</li>'
                 );
