@@ -1,5 +1,7 @@
 $(document).ready(function() {
     $('.tabs').tabs();
+    $('.modal').modal();
+    $('.datepicker').datepicker();
 
     if (localStorage.getItem('user') != '') {
         user = JSON.parse(localStorage.getItem('user'));
@@ -72,7 +74,6 @@ function listReservation() {
     var url = API_URL + '/booking?customerID=' + user.id + '&callback=?';
 
     $.getJSON(url, function(result) {
-        console.log(JSON.stringify(result));
         if (result) {
             $('#myBookings .collection-item').empty();
             
@@ -83,9 +84,8 @@ function listReservation() {
                     '       <b>Room #' + booking.room.roomNumber +
                     '       </b>Check-in ' + new Date(booking.startDate).toLocaleDateString() +
                     '       Check-out ' + new Date(booking.endDate).toLocaleDateString() +
-                    '       <a href="#!" class="secondary-content"><i class="material-icons small">cancel</i></a>' +
-                    '       <a href="#!" class="secondary-content"><i class="material-icons small">update</i></a>' +
-                    '       <input type="hidden" name="' + booking.bookingID + '" value="' + booking.bookingID + '" />' +
+                    '       <a href="#!" class="secondary-content" onClick="cancelReservation(' + booking.bookingID + ')"><i class="material-icons small">cancel</i></a>' +
+                    '       <a href="#!" class="secondary-content" onClick="updateReservation(' + booking.bookingID + ',' + booking.room.roomNumber + ',' + booking.customer.id + ')"><i class="material-icons small">update</i></a>' +
                     '   </div>' +
                     '</li>'
                 );
@@ -93,3 +93,34 @@ function listReservation() {
         }
     });
 }
+
+function cancelReservation(bookingId) {
+    var url = API_URL + '/booking/cancel-reservation?bookingID=' + bookingId + '&callback=?';
+
+    $.getJSON(url, function(result) {
+        M.toast({html: result.message});
+        setTimeout(window.location.reload(), 4000);
+    });
+}
+
+function updateReservation(bookingId, roomNumber, customerId) {
+    $('#bookingId').val(bookingId);
+    $('#roomNumber').val(roomNumber);
+    $('#customerId').val(customerId);
+    $('.modal').modal('open');
+}
+
+$('#btnUpdate').click(function() {
+    var url = API_URL + '/booking/update-reservation?bookingID=' + $('#bookingId').val() + 
+    '&roomNumber=' + $('#roomNumber').val() +
+    '&customerId=' + $('#cutomerId').val() +
+    '&startDate=' + new Date($('#checkIn').val()).toISOString() +
+    '&endDate=' + new Date($('#checkOut').val()).toISOString() +'&callback=?';
+
+    $.getJSON(url, function(result) {
+        M.toast({html: result.message});
+        setTimeout(window.location.reload(), 4000);
+    });
+
+    $('#modal').modal('close'); 
+});

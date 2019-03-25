@@ -99,6 +99,34 @@
             </div>
         </div>
     </main>
+    <!-- Modal Structure -->
+    <div id="modalUpdate" class="modal" style="min-height: 600px">
+        <div class="modal-content">
+            <h4>Select new dates</h4>
+            <form class="col s12">
+                <div class="row">
+                    <div class="input-field col s6">
+                        <span class="black-text">
+                            <input type="text" class="datepicker" id="checkIn">
+                        </span>
+                        <label for="checkIn">Check-In</label>
+                    </div>
+                    <div class="input-field col s6">
+                        <span class="black-text">
+                            <input type="text" class="datepicker" id="checkOut">
+                        </span>                                        
+                        <label for="checkOut">Check-Out</label>
+                    </div>
+                </div>
+                <input type="hidden" name="bookingId" id="bookingId" value="" />
+                <input type="hidden" name="roomNumber" id="roomNumber" value="" />
+                <input type="hidden" name="customerId" id="customerId" value="" />
+            </form>
+        </div>
+        <div class="modal-footer">
+            <a href="#!" class="modal-close waves-effect waves-green btn-flat" id="btnUpdate">Confirm Update</a>
+        </div>
+    </div>
 
     <!--JavaScript at end of body for optimized loading-->
     <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>

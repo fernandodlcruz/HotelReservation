@@ -86,7 +86,7 @@ function ConfirmReservation() {
 
     $.getJSON(url, function(result) {
         M.toast({html: result.message});
-        setTimeOut(window.location='index.html', 5000);
+        setTimeout(window.location='index.html', 5000);
     });
 }
 

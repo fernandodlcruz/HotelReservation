@@ -40,7 +40,7 @@ public class BookingService {
         	booking.setCustomer(custDAO.GetById(booking.getCustomer().getId()));
         	
             //create a temporary file
-            File logFile = new File("Room " + booking.getRoom().getRoomNumber() + " " + action + ".txt");
+            File logFile = new File("Room_" + booking.getRoom().getRoomNumber() + "_" + action + ".txt");
 
             // This will output the full path where the file will be written to...
             System.out.println(logFile.getCanonicalPath());

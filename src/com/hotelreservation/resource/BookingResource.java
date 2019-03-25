@@ -60,7 +60,7 @@ public class BookingResource {
 		BookingService bookService = new BookingService();
 		
 		if (bookService.cancelReservation(bookingID)) {
-			return "{\"status\": \"deleted\"}";
+			return "{\"status\": \"deleted\", \"message\": \"Reservation deleted successfully\"}";
 		} else {
 			return "{\"status\": \"no_deletion\", \"message\": \"Reservation does not exist\"}";
 		}
@@ -73,6 +73,7 @@ public class BookingResource {
 	public String updateReservation(@QueryParam("callback") String callback,
 			@QueryParam("bookingID") int bookingID, 
 			@QueryParam("roomNumber") int roomNumber, 
+			@QueryParam("customerID") int customerID,
 			@QueryParam("startDate") String startDate, 
 			@QueryParam("endDate") String endDate) {
 		DateFormat df = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSXXX");
@@ -81,7 +82,7 @@ public class BookingResource {
 		
 		try {
 			//Update is not touching the Customer name or first name so they can be null at this step.
-			booking = new Booking(bookingID, null, null, df.parse(startDate), df.parse(endDate));
+			booking = new Booking(bookingID, new Room(roomNumber, 0, 0, ""), new Customer(customerID, "","","","",0), df.parse(startDate), df.parse(endDate));
 		} catch (ParseException e) {
 			e.printStackTrace();
 			return "{\"status\": \"nok\", \"message\": \"Wrong date format. expected yyyy-mm-dd.\"}";
